@@ -330,15 +330,15 @@ a {
 }
 
 .slash {
-  content: url(../assets/1slash.png);
+  content: url(../images/1slash.png);
 }
 
 .x {
-  content: url(../assets/x.png);
+  content: url(../images/x.png);
 }
 
 .circlex {
-  content: url(../assets/circlex.png);
+  content: url(../images/circlex.png);
 }
 
 .numbers {
