@@ -9,7 +9,7 @@
   "author": "Dan",
   "license": "ISC",
   "dependencies": {
-    "node-sass": "^4.11.0"
+    "node-sass": "^4.13.1"
   },
   "devDependencies": {
     "grunt-contrib-uglify": "^4.0.1"
