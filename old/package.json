@@ -1,0 +1,19 @@
+{
+  "name": "cricket",
+  "version": "1.0.0",
+  "description": "darts scorboard",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imdan/cricket.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imdan/cricket/issues"
+  },
+  "homepage": "https://github.com/imdan/cricket#readme"
+}

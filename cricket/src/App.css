@@ -1,0 +1,209 @@
+.App {
+  text-align: center;
+  background-color: #3b653d;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+h1 {
+  color: white;
+  font-size: 38px;
+  font-family: 'Montserrat Subrayada', sans-serif;
+  margin-bottom: 12px;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 2px solid rgba(255,255,255,.5);
+  padding-bottom: 20px;
+  color: white;
+  margin: auto;
+  margin-bottom: 0px;
+  max-width: 750px;
+
+}
+
+.infoItem {
+  flex: 1;
+  text-align: center;
+  font-size: 24px;
+}
+
+.infoItemSmall {
+  text-align: center;
+  flex: .5;
+  align-self: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.boardContainer {
+  max-width: 750px;
+  margin: auto;
+  /* border: 1px solid white; */
+  border-bottom: none;
+  border-top: none;
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 33.333333333%;
+  height: 80vh;
+  /* border: 1px solid white; */
+  border-bottom: none;
+  border-top: none;
+}
+
+.columnItem {
+  display: flex;
+  flex: 1;
+  color: white;
+  /* font-size: 32px; */
+  /* font-family: 'Montserrat Subrayada', sans-serif; */
+  align-items: center;
+  justify-content: center;
+}
+
+.smallColumnItem {
+  display: flex;
+  flex: .5;
+  color: white;
+  /* font-size: 32px; */
+  /* font-family: 'Montserrat Subrayada', sans-serif; */
+  align-items: center;
+  justify-content: center;
+  opacity: .75;
+}
+
+.streak {
+  flex: .5;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* overflow: scroll; */
+  min-width: 0;
+}
+
+.playerName {
+  background: none;
+  display: inline-block;
+  font-size: 26px;
+  color: white;
+  text-align: center;
+  width: 100%;
+  border: none;
+}
+
+.playerName::placeholder {
+  color: white;
+  opacity: .5;
+}
+
+.chalk {
+  /* display: block; */
+  margin-left: auto;
+  margin-right: auto;
+  width: 75px;
+  height: 65px;
+  /* transform: scale(0.6); */
+  
+}
+
+.guide {
+  opacity: .1;
+  content: url("../public/x.png");
+}
+
+.slash {
+  content: url("../public/1slash.png");
+  
+}
+
+.x {
+  content: url("../public/x.png");
+}
+
+.circlex {
+  content: url("../public/circlex.png");
+}
+
+.previousScoresContainer {
+  /* flex-direction: column; */
+  /* flex-grow: 0; */
+  overflow: scroll;
+  box-sizing: border-box;
+  /* padding-top: 10px; */
+  padding-left: 75px;
+  justify-content: space-around;
+}
+
+.previousScore {
+  margin-right: 25px;
+  /* width: 50px; */
+  font-size: 18px;
+}
+
+.modalContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.15);
+  backdrop-filter: blur(1px);
+  z-index: 10;
+}
+
+.modal {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
+  height: 150px;
+  background-color: rgba(255,255,255,1);
+  border-radius: 5px
+}
+
+.modal p {
+  /* font-family: 'Montserrat Subrayada', sans-serif; */
+  color: #3b653d;
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.modalButton {
+  flex: .32;
+  /* background-color: #3b653d; */
+  background-color: white;
+  border: 2px solid #3b653d;
+  /* color: white; */
+  color: #3b653d;
+  font-size: 16px;
+  /* border: none; */
+  /* margin-left: 20px; */
+  /* width: 42px; */
+  height: 38px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.modalButton:hover {
+   background-color: #3b653d;
+   /* background-color: white; */
+   /* border: 2px solid #3b653d; */
+   color: white;
+}
