@@ -1,8 +1,8 @@
 import './App.css';
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 
 
-function Board({playerOne, playerTwo}) {
+function Board({ playerOne, playerTwo }) {
 
     // need to figure out check for winner next
 
@@ -17,6 +17,8 @@ function Board({playerOne, playerTwo}) {
     const [alert, setAlert] = useState(false)
     const [winner, setWinner] = useState("")
     const [renderToggle, setRenderToggle] = useState(true)
+    const [supCount, setSupCount] = useState(1)
+    const [saySup, setSaySup] = useState(false)
 
     useEffect(() => {
         setPlayerOneScoreboard(playerOne.scoreboard)
@@ -31,24 +33,26 @@ function Board({playerOne, playerTwo}) {
 
     const markScore = (value, player) => {
         let closed = isClosed(value)
+        setSupCount(1)
+        setSaySup(false)
 
         if (!closed) {
             if (player === 'p1') {
 
                 playerOne.addScore(value)
                 playerOne.totalScore()
-                
+
                 let scoreboard = playerOne.scoreboard
                 setPlayerOneScoreboard(scoreboard)
 
                 let score = playerOne.score
                 setPlayerOneScore(score)
-                
+
                 let scoresArr = previousScores
-                scoresArr.push({player, value})
+                scoresArr.push({ player, value })
                 setPreviousScores(scoresArr)
                 // console.log(previousScores)
-                
+
                 setRenderToggle(!renderToggle)
 
             } else {
@@ -57,19 +61,19 @@ function Board({playerOne, playerTwo}) {
 
                 let scoreboard = playerTwo.scoreboard
                 setPlayerTwoScoreboard(scoreboard)
-                
+
                 let score = playerTwo.score
                 setPlayerTwoScore(score)
-                
+
                 let scoresArr = previousScores
-                scoresArr.push({player, value})
+                scoresArr.push({ player, value })
                 setPreviousScores(scoresArr)
                 // console.log(previousScores)
-                
+
                 setRenderToggle(!renderToggle)
-                
+
             }
-            
+
             getStreak()
             checkForWinner()
 
@@ -80,6 +84,8 @@ function Board({playerOne, playerTwo}) {
 
     const undoScore = (e) => {
         e.preventDefault()
+        setSupCount(1)
+        setSaySup(false)
 
         if (previousScores.length >= 1) {
             let previousArr = previousScores
@@ -107,13 +113,13 @@ function Board({playerOne, playerTwo}) {
             }
 
         }
-        
-        getStreak() 
+
+        getStreak()
 
     }
 
     const getChalk = (count) => {
-        if (count === 1 ) {
+        if (count === 1) {
             return './1slash.png'
         } else if (count === 2) {
             return './x.png'
@@ -162,9 +168,9 @@ function Board({playerOne, playerTwo}) {
 
         let playerWithStreak = inARowArr[0].player === 'p1' ? playerOneName : playerTwoName
         let valuesArr = inARowArr.map(v => v.value).reverse()
-        
+
         let countsOfValues = {}
-        valuesArr.forEach(v => {countsOfValues[v] = (countsOfValues[v] || 0) + 1; })
+        valuesArr.forEach(v => { countsOfValues[v] = (countsOfValues[v] || 0) + 1; })
         // console.log(countsOfValues)
 
         let valuesSetArr = Array.from(new Set(valuesArr))
@@ -173,7 +179,7 @@ function Board({playerOne, playerTwo}) {
         })
 
         let newStreak = {
-            playerWithStreak, 
+            playerWithStreak,
             values: valuesArrWithCount.join(' ')
         }
 
@@ -203,7 +209,7 @@ function Board({playerOne, playerTwo}) {
 
     const allClosed = (scoreboard) => {
         let closedCount = 0
-        
+
         for (let i = 0; i <= scoreboard.length - 1; i++) {
             if (scoreboard[i].closed) {
                 closedCount += 1
@@ -214,6 +220,22 @@ function Board({playerOne, playerTwo}) {
             return true
         } else {
             return false
+        }
+    }
+
+    const countSup = (e) => {
+        // console.log(e.target.innerHTML
+
+        if (e.target.innerHTML === '20') {
+            if (supCount > 4) {
+                setSupCount(1)
+                setSaySup(false)
+            }
+
+            let count = supCount;
+            count += 1;
+            setSupCount(count)
+            if (supCount === 4) { setSaySup(true) }
         }
     }
 
@@ -236,13 +258,13 @@ function Board({playerOne, playerTwo}) {
         e.target.select()
     }
 
-    const numbers = ['20','19','18','17','16','15','bull']
+    const numbers = ['20', '19', '18', '17', '16', '15', 'bully']
 
     return (
         <div >
-            <h1>cricket</h1>
+            {!saySup ? <h1>crickets</h1> : <a href="https://www.sup.cool" target='_blank' rel='noreferrer' style={{ textDecoration: 'none' }}><h1>sup</h1></a>}
 
-            {alert && 
+            {alert &&
                 <div className='modalContainer'>
                     <div className='modal'>
 
@@ -257,7 +279,7 @@ function Board({playerOne, playerTwo}) {
                 </div>
             }
 
-            {winner && 
+            {winner &&
                 <div className='modalContainer'>
                     <div className='modal'>
 
@@ -275,16 +297,16 @@ function Board({playerOne, playerTwo}) {
             <div className='infoContainer'>
 
                 {/* player one name input */}
-                <div className='infoItem' ><input type="text" name="p1Name" className='playerName' placeholder='Player 1' value={playerOneName} onChange={(e) => {setPlayerOneName(e.target.value); localStorage.setItem('playerOneName', e.target.value)}} onFocus={handleFocus} style={playerOneName === 'Player 1' ? {opacity: '.5'} : {opacity: '1'}}/></div>
-                
+                <div className='infoItem' ><input type="text" name="p1Name" className='playerName' placeholder='Player 1' value={playerOneName} onChange={(e) => { setPlayerOneName(e.target.value); localStorage.setItem('playerOneName', e.target.value) }} onFocus={handleFocus} style={playerOneName === 'Player 1' ? { opacity: '.5' } : { opacity: '1' }} /></div>
+
                 {/* undo move */}
-                <div className='infoItemSmall'><span style={previousScores.length >= 1 ? {opacity: '1'} : {opacity: '.5'}} onClick={(e) => {undoScore(e)}}>undo</span></div>
+                <div className='infoItemSmall'><span style={previousScores.length >= 1 ? { opacity: '1' } : { opacity: '.5' }} onClick={(e) => { undoScore(e) }}>undo</span></div>
 
                 {/* reset board */}
-                <div className='infoItemSmall'><span onClick={toggleAlert} style={previousScores.length >= 1 ? {opacity: '1'} : {opacity: '.5'}}>reset</span></div>
-                
+                <div className='infoItemSmall'><span onClick={toggleAlert} style={previousScores.length >= 1 ? { opacity: '1' } : { opacity: '.5' }}>reset</span></div>
+
                 {/* player two name input */}
-                <div className='infoItem' ><input type="text" name="p2Name" className='playerName' placeholder='Player 2' value={playerTwoName} onChange={(e) => {setPlayerTwoName(e.target.value); localStorage.setItem('playerTwoName', e.target.value)}} onFocus={handleFocus} style={playerTwoName === 'Player 2' ? {opacity: '.5'} : {opacity: '1'}}/></div>
+                <div className='infoItem' ><input type="text" name="p2Name" className='playerName' placeholder='Player 2' value={playerTwoName} onChange={(e) => { setPlayerTwoName(e.target.value); localStorage.setItem('playerTwoName', e.target.value) }} onFocus={handleFocus} style={playerTwoName === 'Player 2' ? { opacity: '.5' } : { opacity: '1' }} /></div>
 
             </div>
 
@@ -292,48 +314,48 @@ function Board({playerOne, playerTwo}) {
 
                 {/* player one chalk column */}
                 <div className='column'>
-                    {playerOneScoreboard.map(({value, count, textValue}) => (
-                        
+                    {playerOneScoreboard.map(({ value, count, textValue }) => (
+
                         <div className='columnItem' data-value={value} key={`p1-${textValue}`}>
-                            <img onClick={() => {markScore(value, 'p1')}} className='chalk' style={count === 0 ? {fontSize: '12px', opacity: '.05'} : {fontSize: '12px'}} src={getChalk(count)} alt="chalk" />
+                            <img onClick={() => { markScore(value, 'p1') }} className='chalk' style={count === 0 ? { fontSize: '12px', opacity: '.05' } : { fontSize: '12px' }} src={getChalk(count)} alt="chalk" />
                         </div >
-                            
+
                     ))}
 
-                    <div className='columnItem' ><span style={{fontSize: '42px', fontFamily: "'Montserrat Subrayada', sans-serif"}}>{playerOneScore}</span></div>
+                    <div className='columnItem' ><span style={{ fontSize: '42px', fontFamily: "'Montserrat Subrayada', sans-serif" }}>{playerOneScore}</span></div>
 
                 </div>
-                
+
                 {/* numbers column */}
-                <div className='column' style={{border: '2px solid rgba(255,255,255,.5)', borderTop:'none', borderBottom: 'none'}}>                   
+                <div className='column' style={{ border: '2px solid rgba(255,255,255,.5)', borderTop: 'none', borderBottom: 'none' }}>
                     {numbers.map((number) => (
-                        <div className='columnItem' key={number} data-number={number} style={{fontSize: '36px'}}>{number}</div>
+                        <div className='columnItem' onClick={(e) => countSup(e)} key={number} data-number={number} style={{ fontSize: '36px', cursor: 'default' }}>{number}</div>
                     ))}
-                    
+
                     {/* previouse score entries */}
                     <div className='smallColumnItem'>
-                        {streak.values && 
-                            <div style={{fontSize: '20px'}}>{`${streak.playerWithStreak}`}</div>
-                        }                       
+                        {streak.values &&
+                            <div style={{ fontSize: '20px' }}>{`${streak.playerWithStreak}`}</div>
+                        }
                     </div>
                     <div className='smallColumnItem streak'>
-                        {streak.values && 
-                            <div style={{maxWidth: '100%'}}>{`${streak.values}`}</div>
+                        {streak.values &&
+                            <div style={{ maxWidth: '100%' }}>{`${streak.values}`}</div>
                         }
                     </div>
                 </div>
-                
+
                 {/* player two chalk column */}
                 <div className='column'>
-                {playerTwoScoreboard.map(({value, count, textValue}) => (
+                    {playerTwoScoreboard.map(({ value, count, textValue }) => (
 
                         <div className='columnItem' data-value={value} key={`p2-${textValue}`}>
-                            <img onClick={() => {markScore(value, 'p2')}} className='chalk' style={count === 0 ? {fontSize: '12px', opacity: '.05'} : {fontSize: '12px'}} src={getChalk(count)} alt="chalk" />
+                            <img onClick={() => { markScore(value, 'p2') }} className='chalk' style={count === 0 ? { fontSize: '12px', opacity: '.05' } : { fontSize: '12px' }} src={getChalk(count)} alt="chalk" />
                         </div >
 
                     ))}
 
-                    <div className='columnItem'><span style={{fontSize: '42px', fontFamily: "'Montserrat Subrayada', sans-serif"}}>{playerTwoScore}</span></div>
+                    <div className='columnItem'><span style={{ fontSize: '42px', fontFamily: "'Montserrat Subrayada', sans-serif" }}>{playerTwoScore}</span></div>
 
                 </div>
             </div>

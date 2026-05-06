@@ -5,7 +5,7 @@ import Player from './Player.js'
 function App() {
 
   let playerOne = new Player('Dan')
-  let playerTwo =  new Player('Guy')
+  let playerTwo =  new Player('Man')
 
   return (
     <div className="App">
